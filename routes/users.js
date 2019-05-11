@@ -4,16 +4,12 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const router = express.Router();
 
-//bcrypt
-const saltRounds = 10;
-const myPlaintextPassword = 's0/\/\P4$$w0rD';
-const someOtherPlaintextPassword = 'not_bacon';
 
 //create SQL connection
 var connection = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "",
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASS,
   database: "tasks"
 });
 
@@ -70,12 +66,11 @@ router.post('/signin', (req, res, next) => {
         if(hashres){
           connection.query(`SELECT * FROM users WHERE email = "${req.body.email}" AND password = "${results[0].password}"`, (err, users, fields) => {
             if(err) throw err;
-            jwt.sign({ id: users[0].id, name: users[0].name, email: users[0].email,}, 'jwt_secret_key_1234', { expiresIn: '1h' }, (err, token) => {
+            jwt.sign({ id: users[0].id, name: users[0].name, email: users[0].email,}, process.env.JWT_KEY, { expiresIn: '1h' }, (err, token) => {
               res.status(200).json({
                 message: 'Signin successful',
                 token: token
               });
-              console.log("Created token: " + token);
             });
           });
         }else{

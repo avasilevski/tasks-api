@@ -2,12 +2,14 @@ var express = require('express');
 var mysql = require('mysql');
 const jwt = require('jsonwebtoken');
 var router = express.Router();
+require("dotenv").config();
+
 
 //create SQL connection
 var connection = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "",
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASS,
   database: "tasks"
 });
 
@@ -33,7 +35,6 @@ router.get('/tasks', verifyToken, (req, res, next) => {
 
 /* Add task */
 router.post('/tasks', verifyToken, (req, res, next) => {
-  console.log(req.body);
   connection.query(`INSERT INTO tasks (userid, taskname, taskvalue) VALUES ("${req.body.userid}","${req.body.taskname}","${req.body.taskvalue}")`, (err, result) => {
     if(err) throw err;
     res.status(200);
@@ -55,11 +56,9 @@ function verifyToken(req, res, next){
   //Get auth header value
   const token = req.headers['auth'];
   //Check if authHeader is undefined
-  console.log("Recived token: " + token);
   if(typeof token !== 'undefined'){
     //Set the token and do the verification
-    jwt.verify(token, 'jwt_secret_key_1234', (err, authData) => {
-      console.log(err);
+    jwt.verify(token, process.env.JWT_KEY, (err, authData) => {
       if(err){
         //Wrong token
         res.sendStatus(403);
