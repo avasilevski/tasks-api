@@ -1,7 +1,6 @@
 var createError = require('http-errors');
 var express = require('express');
 var cors = require('cors');
-// var mysql = require('mysql');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
@@ -9,6 +8,7 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var tasksRouter = require('./routes/tasks');
 
 var app = express();
 
@@ -28,16 +28,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 app.use(bodyParser.json());
 
-//???
-// app.use((req, res, next) => {
-//   res.header("Access-Control-Allow-Origin", "*");
-//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-//   next();
-// });
-
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-
+app.use('/tasks', tasksRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
