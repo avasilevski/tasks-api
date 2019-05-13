@@ -1,26 +1,7 @@
 var express = require('express');
-var mysql = require('mysql');
 const auth = require('../middlewares/auth');
 var router = express.Router();
 require("dotenv").config();
-
-//create SQL connection
-var connection = mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASS,
-  database: "tasks"
-});
-
-connection.connect((err) => {
-  if(err) throw err;
-  console.log("Connected to SQL");
-});
-
-connection.query('CREATE TABLE IF NOT EXISTS tasks (id INT AUTO_INCREMENT PRIMARY KEY,userid INT,taskname VARCHAR(255),taskvalue BOOLEAN);', (err) => {
-  if(err) throw err;
-  console.log("Table tasks created");
-});
 
 
 /* Get tasks for user by userid */

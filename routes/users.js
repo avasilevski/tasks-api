@@ -1,34 +1,19 @@
 const express = require('express');
-const mysql = require('mysql');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const User = require('../models/user');
+const sequelize = require('../config/sequelize');
 const router = express.Router();
 
 
-//create SQL connection
-var connection = mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASS,
-  database: "tasks"
-});
-
-connection.connect((err) => {
-  if(err) throw err;
-  console.log("Connected to SQL");
-});
-
-connection.query('CREATE TABLE IF NOT EXISTS users (id INT AUTO_INCREMENT PRIMARY KEY,name VARCHAR(255),email VARCHAR(255),password VARCHAR(255));', (err) => {
-  if(err) throw err;
-  console.log("Table users created");
-});
-
 /* Get users */
 router.get('/', (req, res, next) => {
-  connection.query('SELECT * FROM users', (err, result) => {
-    if(err) throw err;
-    res.status(200).json(result);
+  sequelize.query('SELECT * FROM users', {model: User}).then((users) => {
+    res.status(200).json(users);
   });
+  // User.findAll().then(users => {
+  //   res.status(200).json(users);
+  // }).catch(err => console.log(err));
 });
 
 

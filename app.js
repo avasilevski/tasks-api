@@ -1,5 +1,6 @@
 var createError = require('http-errors');
 var express = require('express');
+var sequelize = require('./config/sequelize');
 var cors = require('cors');
 var path = require('path');
 var cookieParser = require('cookie-parser');
@@ -11,6 +12,11 @@ var usersRouter = require('./routes/users');
 var tasksRouter = require('./routes/tasks');
 
 var app = express();
+
+// connect with the mysql db
+sequelize.sync()
+    .then(() => console.log('DB connected...'))
+    .catch(err => console.log(err));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
