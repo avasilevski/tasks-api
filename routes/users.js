@@ -2,18 +2,18 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
-const sequelize = require('../config/sequelize');
+// const sequelize = require('../config/sequelize');
 const router = express.Router();
 
 
 /* Get users */
 router.get('/', (req, res, next) => {
-  sequelize.query('SELECT * FROM users', {model: User}).then((users) => {
-    res.status(200).json(users);
-  });
-  // User.findAll().then(users => {
+  // sequelize.query('SELECT * FROM users', {model: User}).then((users) => {
   //   res.status(200).json(users);
-  // }).catch(err => console.log(err));
+  // });
+  User.findAll().then(users => {
+    res.status(200).json(users);
+  }).catch(err => console.log(err));
 });
 
 
