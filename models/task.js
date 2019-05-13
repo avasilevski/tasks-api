@@ -4,13 +4,13 @@ const db = require('../config/sequelize');
 /* Task model */
 const Task = db.define('task', {
     id: {
-        type: type.INTEGER,
+        type: sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
-    userid: type.INTEGER,
-    taskname: type.STRING,
-    taskvalue: type.BOOLEAN,
+    userid: sequelize.INTEGER,
+    taskname: sequelize.STRING,
+    taskvalue: sequelize.BOOLEAN,
 });
 
 module.exports = Task;

@@ -1,6 +1,7 @@
-var express = require('express');
+const express = require('express');
 const auth = require('../middlewares/auth');
-var router = express.Router();
+const Task = require('../models/task');
+const router = express.Router();
 require("dotenv").config();
 
 
