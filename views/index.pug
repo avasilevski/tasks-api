@@ -2,4 +2,16 @@ extends layout
 
 block content
   h1= title
-  p Welcome to #{title}
+  br
+  h2 Public Endpoints List
+  p POST users/signup - req(name, email, password), res(status 200)
+  p POST users/signin - req(email, password), res(status 200 and JSW Token, lasts 1h)
+  hr
+  p GET tasks/        - header(userid), req(JSW Token), res(status 200 and all tasks for user with requested id in JSON)
+  p POST tasks/       - req(userid, taskname, taskvalue, JSW Token) res(status 200 and posted task in JSON)
+  p DELETE tasks/     - req(id) res(status 200)
+  hr
+  br
+  h3 Tasks REST API is free for personal use and open source.
+  h3 Author: Aleksandar Vasilevski
+  

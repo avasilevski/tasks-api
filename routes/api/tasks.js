@@ -1,12 +1,13 @@
 const express = require('express');
-const auth = require('../middlewares/auth');
-const Task = require('../models/task');
+const auth = require('../../middlewares/auth');
+const Task = require('../../models/task');
 const router = express.Router();
 
 
 /* Get tasks for user by userid */
 router.get('/', auth.verifyToken, (req, res, next) => {
-  Task.findAll({where: {userid: req.body.userid}}).then(tasks => {
+  const userid = req.headers['userid'];
+  Task.findAll({where: {userid: userid}}).then(tasks => {
     res.status(200).json(tasks);
   }).catch(err => console.log(err));
 
@@ -19,8 +20,8 @@ router.get('/', auth.verifyToken, (req, res, next) => {
 
 /* Add task */
 router.post('/', auth.verifyToken, (req, res, next) => {
-  Task.create({userid: req.body.userid, taskname: req.body.taskname, taskvalue: req.body.taskvalue}).then(task => {
-    res.status(200).end();
+  Task.create({ userid: req.body.userid, taskname: req.body.taskname, taskvalue: req.body.taskvalue}).then(task => {
+    res.status(200).json(task);
   }).catch(err => console.log(err));
 
   // connection.query(`INSERT INTO tasks (userid, taskname, taskvalue) VALUES ("${req.body.userid}","${req.body.taskname}","${req.body.taskvalue}")`, (err, result) => {

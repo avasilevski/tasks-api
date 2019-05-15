@@ -7,9 +7,9 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var tasksRouter = require('./routes/tasks');
+var indexRouter = require('./routes/pages/index');
+var usersRouter = require('./routes/api/users');
+var tasksRouter = require('./routes/api/tasks');
 
 var app = express();
 
