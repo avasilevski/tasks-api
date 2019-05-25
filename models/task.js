@@ -8,7 +8,7 @@ const Task = db.define('task', {
         primaryKey: true,
         autoIncrement: true
     },
-    userid: sequelize.INTEGER,
+    categoryid: sequelize.INTEGER,
     taskname: sequelize.STRING,
     taskvalue: sequelize.BOOLEAN,
 });

@@ -8,8 +8,9 @@ const category = db.define('category', {
         primaryKey: true,
         autoIncrement: true
     },
+    userid: sequelize.INTEGER,
     name: sequelize.STRING,
-    color: sequelize.INTEGER
+    color: sequelize.STRING
 });
 
 module.exports = Category;
